@@ -2,6 +2,10 @@
 using namespace std;
 
 class Node{
+/*consits of data and pointer
+	*that ponts the next element in the linked list
+	*/
+
 	public:
 	int data;
 	Node* next;
@@ -11,6 +15,14 @@ class Node{
 	}
 };
 class CirLinkedList{
+/*
+ * Class for the circular linked list data structure.
+ * Contains two pointers namely head and tail, which point
+ * to the first and the last element of the list.
+ * A integer variable named size stores the number of
+ * items of the linked list.
+ */
+
 	private:
 	Node* head;
 	Node* tail;
@@ -22,24 +34,29 @@ class CirLinkedList{
 		n=0;
 	
 	}
-	void insert(int data);
-	void insertAt(int pos,int data);
-	void delt();
-	void deleteAt(int pos);
-    int countItems();void display();
+//member functions of this class.
+	void insert(int data);// inserts Node with data at the end of the list.
+
+	void insertAt(int pos,int data);//inserts Node at the given position.
+	void delt();//deletes the element at the end 
+	void deleteAt(int pos);//deletes the element at the position.
+    int countItems();//returns the number of items.
+void display();//displays the linked list.
   
 };
 
 void CirLinkedList:: insert(int data){
+/* inserts the element at the end of the list*/
 	Node* temp=new Node;
 	temp->data=data;
 
-	if(head==NULL)
+	if(head==NULL)//this is done when the list is empty
+
 	{
 		head =temp;
 		tail=temp;
 	}
-	else
+	else        //this is done when the list is not empty.
 	{
 		temp->next=head;
 		tail->next=temp;
@@ -49,28 +66,39 @@ void CirLinkedList:: insert(int data){
 	n++;
 }
 void CirLinkedList:: insertAt(int pos,int data){
-	if(pos>n)
-	   cout<<"INVALID CHOICE";
+	
+/*inserts the node with data at the given position.*/
+
+if(pos>n)   //no element is added when the 
+	                                    	//position exceeds   //the size of the list
+
+
+	   cout<<"INVALID CHOICE"; 
 	else if(pos==0)
 	{
 		Node* temp=new Node;
-		temp->data=data;
-		
+		temp->data=data;  //element is added at the beginning of the list
+
 		temp->next=head;
 		tail->next=temp;
 		head=temp;
 		n++;
 	}
-	else if(pos==n)
+	else if(pos==n) //element is added at the end of the list by //calling insert function.
+
     {
     	insert(data);
     }
     else{
         Node* temp=new Node;
-		temp->data=data;
+		temp->data=data;//element is added somewhere inof the list
+
 	
 		Node* p=head;
-		for(int i=0;i<pos-1;i++){
+		for(int i=0;i<pos-1;i++){//p variable stores the pointer "head" temporarily
+	                                           //inorder to proceed forward in the list upto 
+	                                           //the position "pos" and add the element there
+
 			p=p->next;
 		}
 		temp->next=p->next;
@@ -79,8 +107,10 @@ void CirLinkedList:: insertAt(int pos,int data){
     }
 }
 void CirLinkedList::delt()
-{
-     	Node* p=head;
+{/*deletes the last element othe list*/ 
+     	Node* p=head;//p variable stores the pointer "head" temporarily
+	                                           //inorder to proceed forward in the list.
+
 		for(int i=0;i<n-1;i++){
 			p=p->next;
 		}
@@ -93,8 +123,10 @@ void CirLinkedList::delt()
 }
 void CirLinkedList::deleteAt(int pos)
 {
+/*no element can be deleted from the position more than the size of the list*/
 	if(pos>n)
 	 cout<<"INVALID CHOICE";
+//deletes the element at beginning.
 	else if(pos==0)
 	{
 		Node* p=head;
@@ -104,12 +136,14 @@ void CirLinkedList::deleteAt(int pos)
 	}
 	
 	else{
-		 Node* p=head;
+		 Node* p=head; //p stores head temporarily
+
 		 for(int i=0;i<pos-1;i++)
 		 {
 		 	p=p->next;
 		 }
-		 Node* q;
+		 Node* q; //q variable stores (pos-1)th element
+
 		 q=p->next;
 		 p->next=q->next;
 		 delete q;
@@ -119,11 +153,12 @@ void CirLinkedList::deleteAt(int pos)
 }
 int CirLinkedList::countItems()
 {
-	return n;
+	return n; //returns the size of the list
+
 }
  
 void CirLinkedList :: display()
-{
+{/*prints the values of the nodes in the list*/
             Node* p=new Node;p=head;
             for(int i=0;i<n-1;i++)
 	{
@@ -136,6 +171,7 @@ void CirLinkedList :: display()
  
 int main()
 {
+/*to execute the members functions*/
 	CirLinkedList cir1;
  
 	for(int i=0;i<10;++i)
