@@ -32,7 +32,7 @@ class DLinkedList {
 		int n;
 
 	public:
-		DLinkedList() {				// Default constructor for DLList
+		DLinkedList() {				// Default constructor for DLinkedList
 			head = NULL;
 			tail=NULL;
 			n=0;
