@@ -62,79 +62,89 @@ class BST
              return 0;
           }
       }
-    void del(int key)
+   void del(int key, node* v)
+{
+  node* temp=root;
+  if(v==NULL)
+  {
+    cout<<"\n \nElement not found !!!\nCan not delete the data entered !";
+    return;
+  }
+  
+  if(v->left==NULL && v->right==NULL)
+  {
+    node* par;
+    par=v->parent;
+    if(par->data>=v->data)
     {
-        node *p=bsearch(root,key);
-        if(p->left == NULL && p->right == NULL)
-        {
-            if(p->parent->left == p)
-            p->parent->left=NULL;
-            else
-            p->parent->right=NULL;
-            delete p;
-        }
-        else if(p->left == NULL || p->right == NULL)
-        {
-            if(p==root)
-            {
-   	            if(p->left!=NULL)
-   	            root=p->left;
-   	            else
-   	            root=p->right;
-            }
-            else
-            {
-                if(p->left == NULL)
-                {
-                    if(p->parent->left == p)
-                    p->parent->left=p->right;
-                    else
-                    p->parent->right=p->right;
-                    delete p;
-                }
-                else 
-                {
-                    if(p->parent->left == p)
-                    p->parent->left=p->left;
-                    else
-                    p->parent->right=p->left;
-                    delete p;
-                }
-            }
-        }
-        else
-        {
-            node *temp=p->left;
-            if(temp==NULL)
-            while(temp->right != NULL)
-            {
-                temp=temp->right;
-            }
-            if(temp->left != NULL)
-            {
-                p->data=temp->data;
-                if(temp->parent->left == temp)
-                temp->parent->left=temp->left;
-                else
-                temp->parent->right=temp->left;
-                delete temp;
-            }
-            else
-            {
-                p->data=temp->data;
-                if(temp->parent->left == temp)
-                {
-                    temp->parent->left=NULL;
-                    delete temp->parent->left;
-                }
-                else
-                {
-	                temp->parent->right=NULL;
-	                delete temp->parent->right;
-                }
-            }
-        }
+      par->left=NULL;
     }
+    else
+      par->right=NULL;
+    delete v;
+    
+  }
+  else if((v->left==NULL || v->right==NULL ))
+   {   
+    if(v!=root)
+    {
+     node* par;
+     node* ch;
+     par=v->parent; 
+     if(v->left==NULL)
+      ch=v->right;
+     else
+      ch=v->left;
+
+     if(par->data>=v->data)
+     {
+       par->left=ch;
+       ch->parent=par;
+     }
+     else
+     {
+       par->right=ch;
+       ch->parent=par;
+     }
+    }
+    else
+    {
+        if(v->left==NULL)
+          root=v->right;
+        else
+          root=v->left;
+    }
+   }
+  else
+  {
+    node* maxleft;
+    maxleft=v->left;
+    while(maxleft->right!=NULL)
+    {
+      maxleft=maxleft->right;
+    }
+    
+   if(maxleft->left==NULL)
+   {
+     v->data=maxleft->data;
+     node* par=maxleft->parent;
+     if(par->left==maxleft)
+        par->left=NULL;
+     else
+        par->right=NULL;
+   }
+   else
+   {
+     v->data=maxleft->data;
+     node* par=maxleft->parent;
+     if(par->left==maxleft)
+        par->left=maxleft->left;
+     else
+        par->right=maxleft->left;
+   }
+
+  }
+}
     node *bsearch(node *v,int data)
     {
         node *temp=v,*p;
@@ -186,10 +196,11 @@ int main()
     bst.bsearch(bst.root,data);
     cout<<"Enter the data you want to delete\n";
     cin>>data;
-    bst.del(data);
+    node* q;
+    q=bst.bsearch(bst.root,data);
+    bst.del(data,q);
     cout<<"Tree after deletion"<<endl;
     bst.display(bst.root);
     
     return 0;
 }
-
