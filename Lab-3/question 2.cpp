@@ -115,7 +115,7 @@ void CirLinkedList::delt()
 			p=p->next;
 		}
 		Node* q;
-		p=q->next;
+		q=p->next;
 		p->next=head;
 		delete q;
 		
